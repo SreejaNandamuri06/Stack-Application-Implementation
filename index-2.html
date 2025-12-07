@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%233b82f6%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M4 19.5A2.5 2.5 0 0 1 6.5 17H20%22/><path d=%22M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z%22/></svg>">
+</head>
+<body>
+
+    <section id="landing-page">
+        <h1 class="landing-title">Stack Data Structure Project</h1>
+        <div class="menu-grid">
+            <div class="menu-card" onclick="enterApp('book')">
+                <div class="menu-icon">📘</div>
+                <div class="menu-text">
+                    <h2>Book Stack Visualizer</h2>
+                    <p>Push and pop colorful books onto a virtual shelf to understand LIFO.</p>
+                </div>
+            </div>
+            <div class="menu-card" onclick="enterApp('browser')">
+                <div class="menu-icon">🌐</div>
+                <div class="menu-text">
+                    <h2>Browser History Demo</h2>
+                    <p>See how Back and Forward buttons use two stacks to navigate.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="app-container">
+        
+        <section id="book-section" class="view-section">
+            <button class="btn-back-menu" onclick="goHome()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Main Menu
+            </button>
+
+            <div class="book-container">
+                <div class="book-controls">
+                    <div class="control-header">
+                        <div>
+                            <h2>Library Stack</h2>
+                            <p>Add books to the shelf.</p>
+                        </div>
+                        <div class="stack-count-badge" id="bookCountBadge">0/10 Books</div>
+                    </div>
+
+                    <input type="text" id="bookInput" class="book-input" placeholder="Enter Book Title..." autocomplete="off">
+                    
+                    <div class="btn-vertical-stack">
+                        <button class="btn-ctrl btn-push" onclick="pushBook()">PUSH BOOK</button>
+                        <button class="btn-ctrl btn-pop" onclick="popBook()">POP BOOK</button>
+                        <button class="btn-ctrl btn-peek" onclick="peekBook()">PEEK</button>
+                        <button class="btn-ctrl btn-clear" onclick="clearBooks()">CLEAR SHELF</button>
+                    </div>
+                    
+                    <p id="bookStatus" class="book-status">Shelf is Empty</p>
+
+                    <div class="log-section">
+                        <button class="btn-toggle-log" onclick="toggleBookLog()">
+                            <span id="bookLogIcon">▶</span> View Action Log
+                        </button>
+                        <div id="bookLogContainer" class="log-container hidden">
+                            <ul id="bookLogList"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shelf-wrapper">
+                    <div id="bookShelf" class="book-shelf"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="browser-section" class="view-section">
+            <button class="btn-back-menu" onclick="goHome()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Main Menu
+            </button>
+
+            <div class="browser-layout-container">
+                <div class="browser-chrome">
+                        <div class="loading-bar" id="browserLoader"></div>
+                    <div class="nav-controls">
+                        <button class="nav-round-btn" id="btnBack" onclick="goBack()" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+                        <button class="nav-round-btn" id="btnFwd" onclick="goFwd()" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+                        <button class="nav-round-btn" onclick="reload()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+                    </div>
+                    <div class="address-bar">
+                        <span class="protocol">https://</span>
+                        <input type="text" id="urlInput" class="url-input" placeholder="Enter website name..." autocomplete="off">
+                        <button class="btn-go" onclick="visitPage()">Go</button>
+                    </div>
+                </div>
+                
+                <div class="browser-body">
+                    <aside class="history-panel">
+                        <div class="history-header"><span>Back History</span><span class="badge badge-back" id="countBack">0 Items</span></div>
+                        <div id="backList" class="history-list"><div class="empty-history">Empty</div></div>
+                    </aside>
+                    
+                    <main class="viewport-wrapper">
+                        <div id="viewportContent" class="viewport"></div>
+                        <div class="browser-log-panel">
+                            <button class="btn-toggle-log" onclick="toggleBrowserLog()">
+                                <span id="browserLogIcon">▶</span> History Log
+                            </button>
+                            <div id="browserLogContainer" class="log-container hidden">
+                                <ul id="browserLogList"></ul>
+                            </div>
+                        </div>
+                    </main>
+                    
+                    <aside class="history-panel panel-right">
+                            <div class="history-header"><span>Forward Stack</span><span class="badge badge-fwd" id="countFwd">0 Items</span></div>
+                        <div id="fwdList" class="history-list"><div class="empty-history">Empty</div></div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
